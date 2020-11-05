@@ -33,6 +33,7 @@ public class ProductController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getById(Model model,@PathVariable("id") Long id){
         Product byId = productService.getById(id);
+        System.out.println(byId);
         model.addAttribute("product",
                 byId == null ? new Product(): byId);
         return "product";
@@ -68,7 +69,7 @@ public class ProductController {
         return "any request " + UUID.randomUUID().toString();
     }
 
-    // http://localhost:8080/app/products?price_from=35.4&priceTo=3
+    // http://localhost:8080/app/products?price_from=35.4&priceTo=700
     @GetMapping(params = {"price_from", "priceTo"})
     public String productsByPrice(Model model,
                                   @RequestParam(name = "price_from") double priceFrom,
@@ -78,13 +79,23 @@ public class ProductController {
         return "list";
     }
 
-    // http://localhost:8080/app/filter?price_from=35.4&priceTo=3
+    // http://localhost:8080/app/products/filter?price_from=35.4&priceTo=3
     @GetMapping("/filter")
     public String filterByPrice(Model model,
                                 @RequestParam(name = "price_from") double priceFrom,
                                 @RequestParam(required = false) Double priceTo){
         List<Product> products =
                 productService.getByPrice(priceFrom, priceTo == null ? Double.MAX_VALUE : priceTo);
+        model.addAttribute("products", products);
+        return "list";
+    }
+
+    // http://localhost:8080/app/products/filterMy?value=MIN
+    // http://localhost:8080/app/products/filterMy?value=MAX
+    // http://localhost:8080/app/products/filterMy?value=MAXMIN
+    @GetMapping("/filterMy")
+    public String filterByPriceMinMax(Model model, @RequestParam(name = "value") String value){
+        List<Product> products =productService.getByPriceMinMax(value);
         model.addAttribute("products", products);
         return "list";
     }

@@ -111,8 +111,8 @@ public class App {
                 .getResultList();
         clients.forEach(System.out::println);
 
-        deleteEntity(em, Product.class, 1L);
-        deleteEntity(em, Client.class, 1L);
+        //deleteEntity(em, Product.class, 1L);
+        //deleteEntity(em, Client.class, 1L);
 
     }
 
