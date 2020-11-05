@@ -23,6 +23,7 @@ public class App {
         Product product = new Product();
         product.setTitle("Milk");
         product.setPrice(45d);
+        InitData.initData(em);
 
         createEntity(em, product);
 
@@ -89,12 +90,12 @@ public class App {
 
 
         List products = em.createNativeQuery("SELECT p.title FROM products p " +
-                        "RIGHT JOIN (SELECT * FROM clients c " +
-                        "JOIN (SELECT * FROM products_sells ps" +
+                "RIGHT JOIN (SELECT * FROM clients c " +
+                "JOIN (SELECT * FROM products_sells ps" +
                 " RIGHT JOIN sells s ON s.id = ps.sell_id) q " +
-        "ON q.clients_id = c.id) qq ON qq.product_id = p.id " +
+                "ON q.clients_id = c.id) qq ON qq.product_id = p.id " +
                 "WHERE qq.clients_id = :id")
-               .setParameter("id", 1)
+                .setParameter("id", 1)
                 .getResultList();
         products.forEach(System.out::println);
 

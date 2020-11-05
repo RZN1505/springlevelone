@@ -25,10 +25,10 @@ public class SpringDataConfig {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setUrl("jdbc:mysql://localhost:3306/article?serverTimezone=UTC");
-        dataSource.setUsername("root");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setPassword("root");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
+        dataSource.setUsername("postgres");
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setPassword("Gisa910515");
         return dataSource;
     }
 
@@ -53,7 +53,7 @@ public class SpringDataConfig {
         Properties jpaProperties = new Properties();
 
         // Указание диалекта конкретной базы данных
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL94Dialect");
 
         // Указание максимальной глубины связи
         jpaProperties.put("hibernate.max_fetch_depth", 3);

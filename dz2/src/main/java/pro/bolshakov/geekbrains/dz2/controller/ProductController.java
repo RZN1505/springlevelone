@@ -17,6 +17,7 @@ public class ProductController {
     private final ProductServiceImpl productService;
 
     public ProductController(ProductServiceImpl productService) {
+        
         this.productService = productService;
     }
 
@@ -45,15 +46,15 @@ public class ProductController {
         return String.valueOf(byId == null ? null : byId.getPrice());
     }
 
-    // http://localhost:8080/app/products/add - GET
-    @GetMapping("/add")
+    // http://localhost:8080/app/products/new - GET
+    @GetMapping("/new")
     public String getFormNewProduct(Model model){
         model.addAttribute("product", new Product());
         return "new-product";
     }
 
-    // http://localhost:8080/app/products/add - POST
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    // http://localhost:8080/app/products/new - POST
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String addNewProduct(Product product){
         Product savedProduct = productService.save(product);
         System.out.println(savedProduct);
@@ -77,11 +78,11 @@ public class ProductController {
         return "list";
     }
 
-    // http://localhost:8080/app/products/filter?price_from=35.4&price_to=3
+    // http://localhost:8080/app/filter?price_from=35.4&priceTo=3
     @GetMapping("/filter")
     public String filterByPrice(Model model,
-                                  @RequestParam(name = "price_from") double priceFrom,
-                                  @RequestParam(name = "price_to", required = false) Double priceTo){
+                                @RequestParam(name = "price_from") double priceFrom,
+                                @RequestParam(required = false) Double priceTo){
         List<Product> products =
                 productService.getByPrice(priceFrom, priceTo == null ? Double.MAX_VALUE : priceTo);
         model.addAttribute("products", products);

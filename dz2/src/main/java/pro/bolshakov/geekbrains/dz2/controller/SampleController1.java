@@ -1,4 +1,4 @@
-package pro.bolshakov.geekbrains.dz2.controller;
+/*package pro.bolshakov.geekbrains.dz2.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ public class SampleController1 {
         System.out.println(model);
         return "index";
     }*/
-
+/*
     @RequestMapping(value = "/bye", method = RequestMethod.GET)
     public String bye(Model model){
         model.addAttribute("message", "Welcome to bloody enterprise");
@@ -33,4 +33,4 @@ public class SampleController1 {
         return "index";
     }
 
-}
+}*/

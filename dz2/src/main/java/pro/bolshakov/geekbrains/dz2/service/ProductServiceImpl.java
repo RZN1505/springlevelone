@@ -1,8 +1,10 @@
 package pro.bolshakov.geekbrains.dz2.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pro.bolshakov.geekbrains.dz2.domain.Product;
-import pro.bolshakov.geekbrains.dz2.repository.ProductRepoImpl;
+import pro.bolshakov.geekbrains.dz2.repository.ProductJpaDAO;
 
 import java.util.Comparator;
 import java.util.List;
@@ -10,38 +12,39 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl {
+    @Autowired
+    private final ProductJpaDAO productJpaDAO;
 
-    private ProductRepoImpl productRepo;
+    public ProductServiceImpl(ProductJpaDAO productJpaDAO) {
 
-    public ProductServiceImpl(ProductRepoImpl productRepo) {
-        this.productRepo = productRepo;
+        this.productJpaDAO = productJpaDAO;
     }
 
+    @Transactional(readOnly = true)
     public Product getById(Long id){
-        return productRepo.getById(id);
+        return productJpaDAO.findById(id).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public List<Product> getAll(){
-        List<Product> products = productRepo.getAll();
+        List<Product> products = productJpaDAO.findAll();
         products.sort(Comparator.comparingLong(Product::getId));
         return products;
     }
 
+    @Transactional(readOnly = true)
     public List<Product> getByPrice(Double start, Double end){
-        return productRepo.getAll().stream()
+        return productJpaDAO.findAll().stream()
                 .filter(product-> product.getPrice() >= start && product.getPrice() <= end)
                 .sorted(Comparator.comparingDouble(Product::getPrice))
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Product save(Product product){
-        return productRepo.save(product);
+         productJpaDAO.save(product);
+         return product;
     }
-
-    public void removeById(Long id){
-        productRepo.remove(id);
-    }
-
 
 
 }
