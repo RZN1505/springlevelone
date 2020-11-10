@@ -6,6 +6,7 @@
 </head>
 <body>
 
+<div th:insert="~{menu :: #nav-menu}"></div>
 
 <table border="1">
     <tr>
@@ -21,6 +22,20 @@
         <td th:text="${product.price}">10.22</td>
     </tr>
 </table>
+
+<form  th:object="${product}" method="post">
+    <table border="1">
+        <tr>
+            <td>New title </td>
+            <td><input type="text" th:field="*{title}"/> </td>
+        </tr>
+        <tr>
+            <td>New price </td>
+            <td><input th:field="*{price}" type="number"/></td>
+        </tr>
+    </table>
+    <button type="submit">Save</button>
+</form>
 
 </body>
 </html>

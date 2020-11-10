@@ -6,8 +6,44 @@
 </head>
 <body>
 
-<h1>All products</h1>
-<p th:each="product : ${products}" th:text="${product.title}"/>
+<div th:insert="~{menu :: #nav-menu}"></div>
+
+<form  th:action="@{/price}" method="get">
+    <table border="1">
+        <tr>
+            <td>Start price </td>
+            <td><input th:name="priceFrom" type="number"/> </td>
+        </tr>
+        <tr>
+            <td>End price </td>
+            <td><input th:name="priceTo" type="number"/></td>
+        </tr>
+    </table>
+    <button type="submit">Filter</button>
+</form>
+
+    <!-- Table to show the data fetched from the db. -->
+    <table class="table" align="left" border="1">
+        <thead>
+        <tr>
+            <th>Id</th><th>Title</th><th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text=${product.id}>Id</td><td><a th:text="${product.title}" th:href="${product.id}"></a></td><td th:text=${product.price}>price</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table" align="left" border="1">
+        <thead>
+        <tr>
+            <th th:if="${products.totalPages > 0}"
+                th:each="pageNumber : ${pageNumbers}"><a th:href="@{/page(size=${products.size}, page=${pageNumber})}"
+                                                         th:text=${pageNumber}></a></th>
+        </tr>
+    </table>
+
 
 </body>
 </html>

@@ -6,7 +6,9 @@
 </head>
 <body>
 
-<form th:action="@{/products/new}" th:object="${product}" method="post">
+<div th:insert="~{menu :: #nav-menu}"></div>
+<p><a th:href=@{/newTest}>Add 20 new random products</a></p>
+<form th:action="@{/new}" th:object="${product}" method="post">
     <table border="1">
         <tr>
             <td>Title</td>
