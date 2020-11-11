@@ -3,6 +3,7 @@ package pro.bolshakov.geekbrains.dz2.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -33,18 +34,19 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/resources/**").addResourceLocations("/resources/");
+                .addResourceHandler("/img/**")
+                .addResourceLocations("classpath:/img/");
     }
 
-    @Bean
+   @Bean
     public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-        resolver.setPrefix("/WEB-INF/templates/");
+        resolver.setPrefix("classpath:/templates/");
         resolver.setSuffix(".html");
         return resolver;
     }
 
-    @Bean
+   @Bean
     public SpringTemplateEngine templateEngine(SpringResourceTemplateResolver resolver){
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(resolver);
@@ -57,6 +59,14 @@ public class AppConfig implements WebMvcConfigurer {
         viewResolver.setTemplateEngine(templateEngine);
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
+    }
+
+    @Bean
+    public ResourceBundleMessageSource messageSource(){
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
 
     @Bean(name="dataSource")

@@ -1,18 +1,13 @@
-package pro.bolshakov.geekbrains.dz2;
 
-/*public class AppSpringData {
+/*package pro.bolshakov.geekbrains.dz2;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/*@SpringBootApplication
+public class MySpringBootApp {
 
     public static void main(String[] args) {
-
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-
-        ProductServiceImpl productService = context.getBean(ProductServiceImpl.class);
-
-        new ProductController(productService);
-
-        Product product = InitData.getProduct1();
-        //System.out.println(product);
-
-       productService.save(product);
+        SpringApplication.run(MySpringBootApp.class, args);
     }
 }*/
