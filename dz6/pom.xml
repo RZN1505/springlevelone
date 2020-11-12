@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pro.bolshakov.geekbrains</groupId>
-	<artifactId>lesson06</artifactId>
+	<artifactId>dz6</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lesson06</name>
+	<name>dz6</name>
 	<description>GeekBrains - Spring Boot - Level One</description>
 
 	<properties>

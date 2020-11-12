@@ -1,4 +1,4 @@
-package pro.bolshakov.geekbrains.dz2.config;
+/*package pro.bolshakov.geekbrains.dz2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -131,5 +131,5 @@ public class AppConfig implements WebMvcConfigurer {
         return tm;
     }
 
-}
+}*/
 

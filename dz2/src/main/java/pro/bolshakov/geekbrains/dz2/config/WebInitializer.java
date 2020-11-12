@@ -1,4 +1,4 @@
-package pro.bolshakov.geekbrains.dz2.config;
+/*package pro.bolshakov.geekbrains.dz2.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
@@ -30,4 +30,4 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
         HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
         return new Filter[]{russianCharsFilter, hiddenHttpMethodFilter};
     }
-}
+}*/

@@ -1,13 +1,13 @@
-
-/*package pro.bolshakov.geekbrains.dz2;
+package pro.bolshakov.geekbrains.dz6;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/*@SpringBootApplication
-public class MySpringBootApp {
+@SpringBootApplication
+public class Lesson06Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(MySpringBootApp.class, args);
+        SpringApplication.run(Lesson06Application.class, args);
     }
-}*/
+
+}
