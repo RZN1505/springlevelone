@@ -1,0 +1,16 @@
+.mixitup .mix {
+/*   display: none; */
+}
+
+.result {
+    background: #EEE none repeat scroll 0 0;
+}
+.result {
+    clear: both;
+    display: inline;
+    float: left;
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+}
+

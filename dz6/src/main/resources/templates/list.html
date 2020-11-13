@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--link rel="stylesheet" type="text/css" th:href="@{/styles/index.css}">
+    <script  type="text/javascript" th:src="@{/script/index.js}"></script-->
+
+    <link rel='stylesheet' href='/webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <script type="text/javascript" src="/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:insert="~{menu :: #nav-menu}"></div>
+<br>
+<hr>
+<br>
+
+<div class="row bglight mastfilter">
+
+    <div class="column medium-4 large-3">
+
+        <div class="masthead_title">
+
+            <h1>Properties For Sale</h1>
+
+            <h5 class="">Showing <span class="mixCount"><i class="fa fa-cog fa-spin"></i></span> properties</h5>
+
+            <button class="button small js-reset">Reset Filters</button>
+
+            <!-- Pagination buttons will be generated here -->
+            <div class="pager-list"></div>
+
+        </div>
+
+    </div>
+
+    <div class="column medium-8 fr">
+
+        <div class="mixitup_filter accordian" id="js-filters">
+
+            <div class="dropdown">
+                <div class="row">
+
+                    <div class="column medium-4">
+                        <div class="search_type filter">
+                            <fieldset>
+                                <label for="filter-county">Search by County</label>
+                                <select id="filter-county" name="filter-county" class="filter filterDropdown fancySelect">
+                                    <option value="">All</option>
+                                    <option  value=".cheshire">Cheshire</option>
+                                    <option  value=".gloucestershire">Gloucestershire</option>
+                                    <option  value=".herefordshire">Herefordshire</option>
+                                    <option  value=".shropshire">Shropshire</option>
+                                    <option  value=".staffordshire">Staffordshire</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="column medium-4">
+                        <div class="search_type filter">
+                            <fieldset>
+                                <label for="filter-type">Search by Type</label>
+                                <select id="filter-type" name="filter-type" class="filter filterDropdown fancySelect">
+                                    <option value="">All</option>
+                                    <option  value=".equestrian">Equestrian</option>
+                                    <option  value=".landfarm">Land &amp; Farm</option>
+                                    <option  value=".countryhouse">Country House</option>
+                                    <option  value=".development">Development</option>
+                                    <option  value=".commercial">Commercial</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="column medium-4">
+                        <div class="search_type sort">
+                            <label>Sort by</label>
+                            <select id="sort-price" name="sort-price" class="fancySelect sort mixSortSelect">
+
+                                <option selected value="price:desc">Price (High to Low)</option>
+                                <option value="price:asc">Price (Low to High)</option>
+                                <option value="name:asc">Property Name (A-Z)</option>
+                                <option value="name:desc">Property Name (Z-A)</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="column medium-4">
+                        <div class="search_type filter">
+                            <fieldset>
+                                <label for="filter--text">Search by Text</label>
+                                <div id="filter_name">
+                                    <label for="filter--text"><i class="fa fa-search"></i></label>
+                                    <input id="filter--text" name="filter_name" type="text" class="full" placeholder="Quick search..." value="" autocomplete="off" data-filter="">
+                                    <button name="filter_name_reset" id="filter_name_reset" class="tipped js-clear" title="Clear" type="submit" value="Reset"><i>&times;</i></button>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+
+                    <div class="column medium-8">
+                        <div class="row">
+                            <div class="column medium-6">
+
+                                <div class="search_type filter">
+                                    <fieldset>
+                                        <label for="minPrice">Price Min</label>
+                                        <select id="minPrice" name="minPrice" title="Minimum Price" class="filter filterPrice fancySelect">
+                                            <option value="price-0" selected>No Minimum Price</option>
+                                            <option value="price-100000" >&pound;100,000</option>
+                                            <option value="price-200000" >&pound;200,000</option>
+                                            <option value="price-300000" >&pound;300,000</option>
+                                            <option value="price-400000" >&pound;400,000</option>
+                                            <option value="price-500000" >&pound;500,000</option>
+                                            <option value="price-750000" >&pound;750,000</option>
+                                            <option value="price-1000000" >&pound;1,000,000</option>
+                                            <option value="price-1500000" >&pound;1,500,000</option>
+                                            <option value="price-2000000" >&pound;2,000,000</option>
+                                            <option value="price-3000000" >&pound;3,000,000</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+
+                            </div>
+                            <div class="column medium-6">
+
+                                <div class="search_type filter">
+                                    <fieldset>
+                                        <label for="maxPrice">Price Max</label>
+                                        <select data-mix-filter="true" id="maxPrice" name="maxPrice" title="Maximum Price" class="filter filterPrice fancySelect">
+                                            <option value="price-10000000" selected>No Maximium Price</option>
+                                            <option value="price-100000" >&pound;100,000</option>
+                                            <option value="price-200000" >&pound;200,000</option>
+                                            <option value="price-300000" >&pound;300,000</option>
+                                            <option value="price-400000" >&pound;400,000</option>
+                                            <option value="price-500000" >&pound;500,000</option>
+                                            <option value="price-750000" >&pound;750,000</option>
+                                            <option value="price-1000000" >&pound;1,000,000</option>
+                                            <option value="price-1500000" >&pound;1,500,000</option>
+                                            <option value="price-2000000" >&pound;2,000,000</option>
+                                            <option value="price-3000000" >&pound;3,000,000</option>
+                                            <option value="price-5000000" >&pound;5,000,000</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+
+                            </div>
+                        </div>
+                        <input class="range-values" >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="row">
+    <div class="column">
+
+        <div id="js-results" class="container">
+            <div class="search_results mixitup pagination">
+
+                <br>
+                <hr>
+                <br>
+
+                <div id="326" class="row result mix price-5000000 farm-house gloucestershire" data-price="4500000">
+                    <div class="column">
+
+                        <div class="row">
+                            <div class="column medium-8 title">
+                                <h3>Property 1 Farm House</h3>
+                                <h5>Gloucestershire</h5>
+                            </div>
+
+                            <div class="column medium-4 saleType">
+                                <h4 class="property_price">&pound;4,500,000</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div id="464" class="row result mix price-3000000 country-farm herefordshire" data-price="2500000">
+                    <div class="column">
+
+                        <div class="row">
+                            <div class="column medium-8 title">
+                                <h3>Property 2 Country Farm</h3>
+                                <h5>Herefordshire</h5>
+                            </div>
+                            <div class="column medium-4 saleType">
+                                <h4 class="property_price">&pound;2,500,000</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div id="467" class="row result mix price-3000000 small-house market-drayton staffordshire " data-price="2300000">
+                    <div class="column">
+
+                        <div class="row">
+                            <div class="column medium-8 title">
+                                <h3>Property 3 Small House</h3>
+                                <h5>Market Drayton, Staffordshire</h5>
+                            </div>
+
+                            <div class="column medium-4 saleType">
+                                <h4 class="property_price">&pound;2,300,000</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+                <div id="513" class="row result mix price-2000000 mansion cheshire equestrian landfarm countryhouse development commercial" data-price="1950000">
+                    <div class="column">
+
+                        <div class="row">
+                            <div class="column medium-8 title">
+                                <h3>Property 4 Mansion</h3>
+                                <h5>Cheshire</h5>
+                            </div>
+                            <div class="column medium-4 saleType">
+                                <h4 class="property_price">&pound;1,950,000</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+                <div id="146" class="row result mix price-2000000 lake-house warrington cheshire landfarm commercial" data-price="1700000">
+                    <div class="column">
+
+                        <div class="row">
+                            <div class="column medium-8 title">
+                                <h3>Property 5 Lake House</h3>
+                                <h5>Warrington, Cheshire</h5>
+                            </div>
+                            <div class="column medium-4 saleType">
+                                <h4 class="property_price">&pound;1,700,000</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<h1>All products</h1>
+<p th:each="product : ${products}" th:text="${product.title}"/>
+
+</body>
+</html>
