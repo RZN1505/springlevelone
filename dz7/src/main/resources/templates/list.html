@@ -34,7 +34,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${products}" >
+                <tr class="rows" th:each="product : ${products}" >
                     <td data-attr="id" th:text="${product.id}"></td>
                     <td data-attr="title" th:text="${product.title}"></td>
                     <td data-attr="price" th:text="${product.price}"></td>

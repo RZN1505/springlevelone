@@ -1,23 +1,41 @@
 package pro.bolshakov.geekbrains.dz6.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "products")
 public class Product {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column
     private String title;
+    @Column
     private Double price;
+
+    @ManyToMany
+    @JoinTable(
+            name = "products_sells",
+            joinColumns = @JoinColumn(name = "sell_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Sell> sellList;
 
     public Product() {
     }
 
     public Product(Long id, String title, Double price) {
         this.id = id;
+        this.title = title;
+        this.price = price;
+    }
+
+    public Product(String title, Double price) {
         this.title = title;
         this.price = price;
     }
@@ -44,6 +62,11 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<Sell> getSells() {
+        System.out.println(Arrays.toString(sellList.toArray()));
+        return sellList;
     }
 
     @Override

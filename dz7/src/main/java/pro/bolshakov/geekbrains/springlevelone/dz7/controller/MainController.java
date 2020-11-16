@@ -1,28 +1,29 @@
-package pro.bolshakov.geekbrains.dz6.controller;
+package pro.bolshakov.geekbrains.springlevelone.dz7.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pro.bolshakov.geekbrains.dz6.domain.Product;
-import pro.bolshakov.geekbrains.dz6.service.ProductService;
+import pro.bolshakov.geekbrains.springlevelone.dz7.dao.ProductDao;
+import pro.bolshakov.geekbrains.springlevelone.dz7.domain.Product;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/products")
 public class MainController {
 
-    private final ProductService productService;
+    private final ProductDao productService;
 
-    public MainController(ProductService productService) {
-        this.productService = productService;
+    public MainController(ProductDao productDao) {
+        this.productService = productDao;
     }
 
     // http://localhost:8080/products - GET
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model){
-        List<Product> products = productService.getAll();
+        List<Product> products = productService.findAll();
         model.addAttribute("products", products);
         return "list";
     }
@@ -30,7 +31,7 @@ public class MainController {
     // http://localhost:8080/products/1 - GET
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getById(Model model,@PathVariable("id") Long id){
-        Product byId = productService.getById(id);
+        Product byId = productService.findById(id).orElse(null);
         model.addAttribute("product",
                 byId == null ? new Product(): byId);
         return "product";
@@ -40,7 +41,7 @@ public class MainController {
     @RequestMapping(value = "/{id}/price", method = RequestMethod.GET)
     @ResponseBody
     public String apiPrice(@PathVariable Long id){
-        Product byId = productService.getById(id);
+        Product byId = productService.findById(id).orElse(null);
         return String.valueOf(byId == null ? null : byId.getPrice());
     }
 
@@ -71,7 +72,7 @@ public class MainController {
     public String productsByPrice(Model model,
                                   @RequestParam(name = "price_from") double priceFrom,
                                   @RequestParam double priceTo){
-        List<Product> products = productService.getByPrice(priceFrom, priceTo);
+        List<Product> products = productService.findAllByPriceBetween(priceFrom, priceTo);
         model.addAttribute("products", products);
         return "list";
     }
@@ -82,23 +83,22 @@ public class MainController {
                                   @RequestParam(name = "price_from") double priceFrom,
                                   @RequestParam(required = false) Double priceTo){
         List<Product> products =
-                productService.getByPrice(priceFrom, priceTo == null ? Double.MAX_VALUE : priceTo);
+                productService.findAllByPriceBetween(priceFrom, priceTo == null ? Double.MAX_VALUE : priceTo);
         model.addAttribute("products", products);
         return "list";
     }
 
     // http://localhost:8080/filter {title:"asd", id: "1", price: "10"}
-   /* @PostMapping("/filter")
-    @ResponseBody
-    public String filterByTitle(Model model,@RequestParam(required = false) String title,@RequestParam(required = false) String id,@RequestParam(required = false) String price){
-        System.out.println(title);
-       /* List<Product> products = */ //return productService.getAll().stream()
-               /* .filter(product-> ( (title != null) ? product.getTitle().contains(title) : (id != null) ? product.getId().toString().contains(id) : product.getPrice().toString().contains(price)))
-                .map(product -> String.valueOf(product.getId()))
-                .collect(Collectors.joining(","));
-                //.collect(Collectors.toList());
-       // model.addAttribute("products", products);
-       // return "list";
+   /* @RequestMapping(value = "/filter", method = RequestMethod.POST)
+    public String filterByTitle(Model model,@RequestBody filterEntity filterEntity){
+        System.out.println(filterEntity.title);
+        List<Product> products = productService.findAll().stream()
+                .filter(product-> ( filterEntity.title.equals("") ? true : product.getTitle().contains(filterEntity.title)))
+                .filter(product-> ( filterEntity.id.equals("") ? true : product.getId().toString().contains(filterEntity.id)))
+                .filter(product-> (filterEntity.price.equals("") ? true : product.getPrice().toString().contains(filterEntity.price)))
+                .collect(Collectors.toList());
+        model.addAttribute("products", products);
+        return "list";
     }*/
 
 }
