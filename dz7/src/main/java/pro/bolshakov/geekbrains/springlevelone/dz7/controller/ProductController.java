@@ -3,10 +3,10 @@ package pro.bolshakov.geekbrains.springlevelone.dz7.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.bolshakov.geekbrains.springlevelone.dz7.dao.ProductDao;
 import pro.bolshakov.geekbrains.springlevelone.dz7.domain.Product;
 import pro.bolshakov.geekbrains.springlevelone.dz7.dto.EntityNotFoundResponse;
 import pro.bolshakov.geekbrains.springlevelone.dz7.exception.EntityNotFoundException;
+import pro.bolshakov.geekbrains.springlevelone.dz7.service.ProductServiceImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,10 +15,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/products-rest")
 public class ProductController {
 
-    private final ProductDao productDao;
+    private final ProductServiceImpl productDao;
 
-    public ProductController(ProductDao productDao) {
-        this.productDao = productDao;
+    public ProductController(ProductServiceImpl productServiceImpl) {
+
+        this.productDao = productServiceImpl;
     }
 
     @GetMapping
@@ -29,7 +30,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id){
         checkById(id);
-        return productDao.findById(id).orElse(null);
+        return productDao.findById(id);
     }
 
     @PostMapping("/")
@@ -67,6 +68,20 @@ public class ProductController {
                 .filter(product-> (filterEntity.price.equals("") ? true : product.getPrice().toString().contains(filterEntity.price)))
                .collect(Collectors.toList());
         return products;
+    }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public Product update(@RequestBody updateEntity updateEntity){
+        System.out.println(updateEntity.id);
+        Long id =  Long.parseLong(updateEntity.id, 10);
+        Product helperProduct = new Product();
+        helperProduct.setId(id);
+        helperProduct.setTitle(updateEntity.title);
+        Double price = Double.parseDouble(updateEntity.price);
+        helperProduct.setPrice(price);
+        productDao.updateCols(id, updateEntity.title, price);
+        return helperProduct;
     }
 
     @ExceptionHandler

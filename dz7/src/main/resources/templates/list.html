@@ -35,9 +35,15 @@
                 </thead>
                 <tbody>
                 <tr class="rows" th:each="product : ${products}" >
-                    <td data-attr="id" th:text="${product.id}"></td>
-                    <td data-attr="title" th:text="${product.title}"></td>
-                    <td data-attr="price" th:text="${product.price}"></td>
+                    <td data-attr="id" >
+                        <input class="form-control-edit" data-attr="id" type="text" th:value="${product.id}" disabled/>
+                    </td>
+                    <td data-attr="title">
+                        <input class="form-control-edit" data-attr="title" type="text" th:value="${product.title}"/>
+                    </td>
+                    <td data-attr="price" >
+                        <input class="form-control-edit" data-attr="price" type="text" th:value="${product.price}"/>
+                    </td>
                 </tr>
                 </tbody>
             </table>

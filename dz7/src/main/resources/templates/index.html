@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel='stylesheet' href='/webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
-    <script type="text/javascript" src="/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+    <title>Title</title>
 </head>
 <body>
-<div th:insert="~{menu :: #nav-menu}"></div>
 
-<h2>Hi, next will be dynamic value</h2>
-<h2 th:text="${msg}"/>
+<a th:href="@{/users}">Users</a><br>
+<a th:href="@{/login}">Login</a><br>
 
+
+<div sec:authorize="isAuthenticated()">
+    <h2> Next information only for authenticated</h2>
+    Authenticated username:
+    <div sec:authentication="principal.username"></div>
+    Authenticated user roles:
+    <div sec:authentication="principal.authorities"></div>
+</div>
 
 
 </body>

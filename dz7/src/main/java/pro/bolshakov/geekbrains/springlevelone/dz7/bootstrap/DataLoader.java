@@ -4,21 +4,38 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pro.bolshakov.geekbrains.springlevelone.dz7.dao.OrderDao;
 import pro.bolshakov.geekbrains.springlevelone.dz7.dao.ProductDao;
+import pro.bolshakov.geekbrains.springlevelone.dz7.dao.UserDao;
 import pro.bolshakov.geekbrains.springlevelone.dz7.domain.Order;
 import pro.bolshakov.geekbrains.springlevelone.dz7.domain.Product;
+import pro.bolshakov.geekbrains.springlevelone.dz7.domain.Role;
+import pro.bolshakov.geekbrains.springlevelone.dz7.domain.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 @Component
 public class DataLoader implements CommandLineRunner {
 
+    public static final User USER = new User();
+    public static final User ADMIN = new User();
+
     private final OrderDao orderDao;
     private final ProductDao productDao;
+    private final UserDao userDao;
 
-    public DataLoader(OrderDao orderDao, ProductDao productDao) {
+    static {
+        USER.setName("User");
+        USER.setPassword("pass");
+        USER.setRole(Role.USER);
+
+        ADMIN.setName("Admin");
+        ADMIN.setPassword("admin");
+        ADMIN.setRole(Role.ADMIN);
+    }
+
+    public DataLoader(OrderDao orderDao, ProductDao productDao, UserDao userDao) {
         this.orderDao = orderDao;
         this.productDao = productDao;
+        this.userDao = userDao;
     }
 
     @Override
@@ -50,6 +67,19 @@ public class DataLoader implements CommandLineRunner {
         Order order3 = new Order();
         order3.setProducts(new ArrayList<>(Arrays.asList(cheese, bread)));
         orderDao.save(order3);
+
+        User u1 = new User();
+        u1.setName("user1");
+        u1.setPassword("user1");
+        u1.setRole(Role.ADMIN);
+
+        User u2 = new User();
+        u2.setName("user2");
+        u2.setPassword("user2");
+        u2.setRole(Role.USER);
+
+        userDao.save(u1);
+        userDao.save(u2);
 
     }
 
